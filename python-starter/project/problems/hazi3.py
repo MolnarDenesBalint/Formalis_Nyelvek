@@ -129,7 +129,7 @@ class hazi3problem(Problem):
         out.append(" ".join(new_name(q) for q in out_finals))
         for src, sym, dst in trans:
             out.append(f"{new_name(src)} {sym} {new_name(dst)}")
-
+        #proba
         try:
             with open(args.output, 'w', encoding='utf-8') as f:
                 f.write("\n".join(out) + "\n")
