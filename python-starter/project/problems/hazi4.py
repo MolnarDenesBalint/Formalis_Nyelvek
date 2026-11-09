@@ -4,7 +4,6 @@ import sys
 from project.problem import Problem
 import argparse
 
-
 LINE_RE = re.compile(r'(([0-9-]+ [0-9:.]+) +([0-9]+) +([0-9]+) ([IDVEFAW]) (.+?):(?: (.+))?)')
 
 PREFIX = r'\s*[0-9-]+ [0-9:.]+ +[0-9]+ +[0-9]+ '
@@ -16,7 +15,7 @@ LOWMEM_RE = re.compile(PREFIX + r'[IDVEFAW] [^:]*lowmemorykiller[^:]*:')
 PID221_RE = re.compile(r'\s*[0-9-]+ 10:18:51\.[0-9]+ +221 ')
 ERROR_RE = re.compile(PREFIX + r'E ')
 PKGMAN_WARN_RE = re.compile(PREFIX + r'W PackageManager\s*:')
-EXO_DEBUG_RE = re.compile(PREFIX + r'D [^:]*ExoPlayer[^:]*:')
+EXO_DEBUG_RE = re.compile(PREFIX + r'D .*ExoPlayer')
 JAVA_POS_RE = re.compile(PREFIX + r'[EW] .*\.java:')
 THREAD_MSG_RE = re.compile(PREFIX + r'[IDVEFAW] [^:]*: .*Thread')
 
@@ -85,7 +84,6 @@ class hazi4problem(Problem):
             elif in_error:
                 result.extend(JAVA_FILE_RE.findall(line))
         return result
-
     def task3(self, lines):
         seen = set()
         order = []
@@ -114,5 +112,6 @@ class hazi4problem(Problem):
                 best = c
                 best_pid = pid
         return [f"PID={best_pid} ({best} errors)"]
+
     def task5(self, lines):
         return [str(sum(1 for line in lines if MAIN_THREAD_ERR_RE.match(line)))]
